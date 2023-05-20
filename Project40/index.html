@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>YandexPanorama</title>
+    <meta charset="utf-8">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=7f7c6385-8d35-46be-97bc-85f13a1b33f8&lang=ru_RU" type="text/javascript"></script>
+    <script src="main.js"></script>
+    <style>
+        html, body {
+            paddig: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        div.player1 {
+            paddig: 0;
+            margin: 0;
+            width: 100%;
+            height: 75%;
+            border: solid 2px red;
+        }
+    </style>
+</head>
+<body>
+    <h1>YandexPanorama</h1>
+    <div id="player" class="player1"></div>
+    <button onclick="onClickNext()">Next</button>
+</body>
+</html>
+//index1.html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Вставка на страницу панорам Яндекса</title>
+    <meta charset="utf-8">
+
+    <style>
+        html, body, .player {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .player {
+            height: 50%;
+        }
+    </style>
+    <!--
+        Укажите свой API-ключ. Тестовый ключ НЕ БУДЕТ работать на других сайтах.
+        Получить ключ можно в Кабинете разработчика: https://developer.tech.yandex.ru/keys/
+    -->
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=f99b1d9c-b9dd-4695-824e-9c5eeb3b098c"></script>
+    <script src="main1.js"></script>
+</head>
+<body>
+    <div id="player1" class="player"></div>
+    <div id="player2" class="player"></div>
+</body>
+</html>
+//main.js
+console.log("test YaPa");
+var X0=56.790927;
+var Y0=49.114453;
+var X1=55.797391;
+var Y1=49.105993;
+var Player1;
+ymaps.ready(init);
+
+function init() {
+	console.log("init:called.");
+	ymaps.panorama.locate([X0,Y0]).done(
+	function(panoramas){
+		console.log("Panoramas: "+panoramas);
+		console.log("Panoramas[0] "+ panoramas[0]);
+		var player = new ymaps.panoramas.Player(
+								"player",
+								panoramas[0],
+								{direction:[180,15]});
+Player1=player;
+},
+function() {}
+);
+}
+
+function onClickNext() {
+	console.log("Clicked: Next");
+	Player1.moveTo([X1,Y1]);
+}
